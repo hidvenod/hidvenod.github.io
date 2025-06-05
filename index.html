@@ -3,735 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>幾何圖案設計器</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 20px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        
-        .header h1 {
-            margin: 0;
-            font-size: 2em;
-            font-weight: 300;
-        }
-        
-        .main-content {
-            display: flex;
-            gap: 20px;
-            padding: 20px;
-        }
-        
-        .canvas-container {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            min-height: 600px;
-        }
-        
-        .controls {
-            width: 280px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-        }
-        
-        .control-group {
-            margin-bottom: 20px;
-            padding: 15px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        
-        .control-group h3 {
-            margin: 0 0 15px 0;
-            font-size: 16px;
-            color: #333;
-            border-bottom: 2px solid #667eea;
-            padding-bottom: 5px;
-        }
-        
-        .control-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-        
-        .control-row:last-child {
-            margin-bottom: 0;
-        }
-        
-        label {
-            font-weight: 500;
-            color: #555;
-        }
-        
-        input[type="range"] {
-            flex: 1;
-            height: 6px;
-            border-radius: 3px;
-            background: #e9ecef;
-            outline: none;
-            -webkit-appearance: none;
-        }
-        
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: #667eea;
-            cursor: pointer;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-        }
-        
-        input[type="range"]::-moz-range-thumb {
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: #667eea;
-            cursor: pointer;
-            border: none;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-        }
-        
-        input[type="color"] {
-            width: 40px;
-            height: 40px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        }
-        
-        button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            width: 100%;
-            margin-bottom: 10px;
-        }
-        
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-        }
-        
-        button:active {
-            transform: translateY(0);
-        }
-        
-        .toggle-button {
-            background: #6c757d;
-        }
-        
-        .toggle-button.active {
-            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-        }
-        
-        .color-picker-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-        
-        .value-display {
-            min-width: 40px;
-            text-align: center;
-            font-weight: bold;
-            color: #667eea;
-        }
-        
-        svg {
-            border: 2px solid #dee2e6;
-            border-radius: 10px;
-            background: white;
-            cursor: crosshair;
-        }
-        
-        .point {
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        @media (hover: hover) {
-            .point:hover {
-                transform: scale(1.2);
-            }
-        }
-        
-        .line {
-            cursor: pointer;
-            transition: stroke-width 0.2s ease;
-        }
-        
-        .line:hover {
-            stroke-width: 3;
-        }
-        
-        .region {
-            cursor: pointer;
-            transition: opacity 0.2s ease;
-        }
-        
-        .region:hover {
-            opacity: 0.8;
-        }
-        
-        .instructions {
-            background: #e7f1ff;
-            border-left: 4px solid #667eea;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 0 8px 8px 0;
-        }
-        
-        .instructions h4 {
-            margin: 0 0 10px 0;
-            color: #667eea;
-        }
-        
-        .instructions ul {
-            margin: 0;
-            padding-left: 20px;
-        }
-        
-        .instructions li {
-            margin-bottom: 5px;
-            color: #555;
-        }
-    </style>
+    <title>hidvenod's page</title>
+    <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🎨 幾何圖案設計器</h1>
-        </div>
-        
-        <div class="main-content">
-            <div class="canvas-container">
-                <svg id="canvas" width="500" height="500" viewBox="0 0 500 500">
-                    <!-- 網格和點將在這裡動態生成 -->
-                </svg>
-            </div>
-            
-            <div class="controls">
-                <div class="instructions">
-                    <h4>📋 使用說明</h4>
-                    <ul>
-                        <li>點擊兩個點來繪製線條</li>
-                        <li>點擊線條來刪除它</li>
-                        <li>點擊封閉區域來填色</li>
-                        <li>使用右側控制面板調整設定</li>
-                    </ul>
-                </div>
-                
-                <div class="control-group">
-                    <h3>🔧 基本設定</h3>
-                    <div class="control-row">
-                        <label>網格大小:</label>
-                        <input type="range" id="gridSize" min="2" max="8" value="4">
-                        <span class="value-display" id="gridSizeDisplay">4</span>
-                    </div>
-                    <div class="control-row">
-                        <label>畫布縮放:</label>
-                        <input type="range" id="canvasScale" min="0.5" max="2" step="0.1" value="1">
-                        <span class="value-display" id="canvasScaleDisplay">1.0</span>
-                    </div>
-                </div>
-                
-                <div class="control-group">
-                    <h3>🎨 顏色設定</h3>
-                    <div class="color-picker-row">
-                        <label>線條顏色:</label>
-                        <input type="color" id="lineColor" value="#000000">
-                    </div>
-                    <div class="color-picker-row">
-                        <label>填充顏色:</label>
-                        <input type="color" id="fillColor" value="#ffffff">
-                    </div>
-                    <div class="color-picker-row">
-                        <label>背景顏色:</label>
-                        <input type="color" id="bgColor" value="#ffffff">
-                    </div>
-                </div>
-                
-                <div class="control-group">
-                    <h3>👁️ 顯示選項</h3>
-                    <button id="togglePoints" class="toggle-button active">顯示點</button>
-                    <button id="toggleGrid" class="toggle-button">顯示網格</button>
-                </div>
-                
-                <div class="control-group">
-                    <h3>🛠️ 操作</h3>
-                    <button id="clearAll">清除所有</button>
-                    <button id="exportSVG">匯出 SVG</button>
-                    <button id="exportPNG">匯出 PNG</button>
-                </div>
-            </div>
-        </div>
+    <div class="particles"></div>
+    <div class="cursor-glow"></div>
+    <div class="theme-control">
+        <button class="theme-btn" onclick="toggleTheme()">◐</button>
     </div>
 
-    <script>
-        class GeometricDesigner {
-            constructor() {
-                this.canvas = document.getElementById('canvas');
-                this.gridSize = 4;
-                this.cellSize = 100;
-                this.points = [];
-                this.lines = [];
-                this.regions = [];
-                this.selectedPoint = null;
-                this.showPoints = true;
-                this.showGrid = false;
-                this.lineColor = '#000000';
-                this.fillColor = '#ffffff';
-                this.bgColor = '#ffffff';
-                
-                this.initializeControls();
-                this.generateGrid();
-                this.render();
-            }
+    <div class="container">
+        <!-- 頁面標題 -->
+        <header class="header-section">
+            <h1 class="site-title">鍋</h1>
+            <p class="site-subtitle">claude 4 還是太權威了，2.5 pro 拚盡全力無法戰勝</p>
+            <div class="curve-divider"></div>
+        </header>
+
+        <!-- 個人展示區 -->
+        <section class="showcase-section">
+            <div class="avatar-area">
+                <div class="avatar-frame">
+                    <div class="avatar-inner"></div>
+                </div>
+                <div class="username">凱歐</div>
+                <div class="user-title">爛炒王 · 賽博蛆蟲</div>
+            </div>
             
-            initializeControls() {
-                // 網格大小控制
-                const gridSizeSlider = document.getElementById('gridSize');
-                const gridSizeDisplay = document.getElementById('gridSizeDisplay');
-                gridSizeSlider.addEventListener('input', (e) => {
-                    this.gridSize = parseInt(e.target.value);
-                    gridSizeDisplay.textContent = this.gridSize;
-                    this.generateGrid();
-                    this.render();
-                });
-                
-                // 畫布縮放控制
-                const canvasScaleSlider = document.getElementById('canvasScale');
-                const canvasScaleDisplay = document.getElementById('canvasScaleDisplay');
-                canvasScaleSlider.addEventListener('input', (e) => {
-                    const scale = parseFloat(e.target.value);
-                    canvasScaleDisplay.textContent = scale.toFixed(1);
-                    this.canvas.style.transform = `scale(${scale})`;
-                });
-                
-                // 顏色控制
-                document.getElementById('lineColor').addEventListener('change', (e) => {
-                    this.lineColor = e.target.value;
-                    this.render();
-                });
-                
-                document.getElementById('fillColor').addEventListener('change', (e) => {
-                    this.fillColor = e.target.value;
-                });
-                
-                // 背景顏色控制
-                document.getElementById('bgColor').addEventListener('change', (e) => {
-                    this.bgColor = e.target.value;
-                    this.canvas.style.backgroundColor = e.target.value;
-                    this.render();
-                });
-                
-                // 顯示切換
-                document.getElementById('togglePoints').addEventListener('click', (e) => {
-                    this.showPoints = !this.showPoints;
-                    e.target.classList.toggle('active');
-                    e.target.textContent = this.showPoints ? '顯示點' : '隱藏點';
-                    this.render();
-                });
-                
-                document.getElementById('toggleGrid').addEventListener('click', (e) => {
-                    this.showGrid = !this.showGrid;
-                    e.target.classList.toggle('active');
-                    e.target.textContent = this.showGrid ? '隱藏網格' : '顯示網格';
-                    this.render();
-                });
-                
-                // 操作按鈕
-                document.getElementById('clearAll').addEventListener('click', () => {
-                    this.lines = [];
-                    this.regions = [];
-                    this.selectedPoint = null;
-                    this.render();
-                });
-                
-                document.getElementById('exportSVG').addEventListener('click', () => {
-                    this.exportSVG();
-                });
-                
-                document.getElementById('exportPNG').addEventListener('click', () => {
-                    this.exportPNG();
-                });
-            }
+            <div class="personal-info">
+                <div class="info-group">
+                    <h3 class="info-title">最近在聽</h3>
+                    <div class="info-content">
+                        <ul class="info-list">
+                            <li>Chopin - Nocturne Op.9 No.2</li>
+                            <li>Ludovico Einaudi - Nuvole Bianche</li>
+                            <li>Max Richter - On The Nature of Daylight</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="info-group">
+                    <h3 class="info-title">最近在讀</h3>
+                    <div class="info-content">
+                        <ul class="info-list">
+                            <li>Brandon Sanderson - Stormlight Archive</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="info-group">
+                    <h3 class="info-title"></h3>
+                    <div class="info-content">
+                        AI 時代真的就是猴子有槍，我動動嘴就能搞出這東西來。
+                    </div>
+                    <div class="info-content">
+                        好啦說真的，這配色我真的很喜歡。
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 功能導航 -->
+        <section class="nav-section">
+            <div class="section-header">
+                <h2 class="section-title">探索空間</h2>
+                <p class="section-desc">這裡有我想與你分享的一切</p>
+            </div>
             
-            generateGrid() {
-                this.points = [];
-                // 計算合適的間距和畫布大小
-                const spacing = 80;
-                const padding = 50;
-                const contentSize = this.gridSize * spacing;
-                const canvasSize = contentSize + padding * 2;
+            <div class="nav-grid">
+                <a href="#" class="nav-card" onclick="loadExtension('novel-reader')">
+                    <div class="card-icon"></div>
+                    <div class="card-title">小說創作</div>
+                    <div class="card-desc">我的原創小說作品，包含奇幻、科幻、現實題材的故事世界</div>
+                </a>
                 
-                // 更新SVG畫布大小
-                this.canvas.setAttribute('width', canvasSize);
-                this.canvas.setAttribute('height', canvasSize);
-                this.canvas.setAttribute('viewBox', `0 0 ${canvasSize} ${canvasSize}`);
+                <a href="#" class="nav-card" onclick="loadExtension('blog')">
+                    <div class="card-icon"></div>
+                    <div class="card-title">隨筆記事</div>
+                    <div class="card-desc">日常感悟、創作心得，以及一些不成熟的想法記錄</div>
+                </a>
                 
-                // 儲存畫布尺寸資訊
-                this.canvasSize = canvasSize;
-                this.contentSize = contentSize;
-                this.padding = padding;
+                <a href="#" class="nav-card" onclick="loadExtension('music-share')">
+                    <div class="card-icon"></div>
+                    <div class="card-title">音樂分享</div>
+                    <div class="card-desc">觸動心靈的旋律收藏，附上我的聆聽感受與推薦理由</div>
+                </a>
                 
-                const offset = padding;
-                
-                for (let i = 0; i <= this.gridSize; i++) {
-                    for (let j = 0; j <= this.gridSize; j++) {
-                        this.points.push({
-                            x: offset + j * spacing,
-                            y: offset + i * spacing,
-                            id: i * (this.gridSize + 1) + j
-                        });
-                    }
-                }
-            }
-            
-            render() {
-                this.canvas.innerHTML = '';
-                
-                // 渲染背景
-                this.renderBackground();
-                
-                // 渲染背景網格
-                if (this.showGrid) {
-                    this.renderGrid();
-                }
-                
-                // 渲染區域填充
-                this.renderRegions();
-                
-                // 渲染線條
-                this.renderLines();
-                
-                // 渲染點
-                if (this.showPoints) {
-                    this.renderPoints();
-                }
-            }
-            
-            renderBackground() {
-                const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-                rect.setAttribute('x', '0');
-                rect.setAttribute('y', '0');
-                rect.setAttribute('width', this.canvasSize || 500);
-                rect.setAttribute('height', this.canvasSize || 500);
-                rect.setAttribute('fill', this.bgColor);
-                this.canvas.appendChild(rect);
-            }
-            
-            renderGrid() {
-                const spacing = 80;
-                const offset = this.padding || 50;
-                
-                for (let i = 0; i <= this.gridSize; i++) {
-                    // 水平線
-                    const hLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-                    hLine.setAttribute('x1', offset);
-                    hLine.setAttribute('y1', offset + i * spacing);
-                    hLine.setAttribute('x2', offset + this.gridSize * spacing);
-                    hLine.setAttribute('y2', offset + i * spacing);
-                    hLine.setAttribute('stroke', '#e0e0e0');
-                    hLine.setAttribute('stroke-width', '1');
-                    hLine.setAttribute('stroke-dasharray', '2,2');
-                    this.canvas.appendChild(hLine);
-                    
-                    // 垂直線
-                    const vLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-                    vLine.setAttribute('x1', offset + i * spacing);
-                    vLine.setAttribute('y1', offset);
-                    vLine.setAttribute('x2', offset + i * spacing);
-                    vLine.setAttribute('y2', offset + this.gridSize * spacing);
-                    vLine.setAttribute('stroke', '#e0e0e0');
-                    vLine.setAttribute('stroke-width', '1');
-                    vLine.setAttribute('stroke-dasharray', '2,2');
-                    this.canvas.appendChild(vLine);
-                }
-            }
-            
-            renderPoints() {
-                this.points.forEach(point => {
-                    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-                    circle.setAttribute('cx', point.x);
-                    circle.setAttribute('cy', point.y);
-                    circle.setAttribute('r', '4');
-                    circle.setAttribute('fill', this.selectedPoint === point.id ? '#ff4757' : '#667eea');
-                    circle.setAttribute('stroke', 'white');
-                    circle.setAttribute('stroke-width', '2');
-                    circle.classList.add('point');
-                    circle.addEventListener('click', () => this.onPointClick(point.id));
-                    this.canvas.appendChild(circle);
-                });
-            }
-            
-            renderLines() {
-                this.lines.forEach((line, index) => {
-                    const p1 = this.points[line.p1];
-                    const p2 = this.points[line.p2];
-                    
-                    const svgLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-                    svgLine.setAttribute('x1', p1.x);
-                    svgLine.setAttribute('y1', p1.y);
-                    svgLine.setAttribute('x2', p2.x);
-                    svgLine.setAttribute('y2', p2.y);
-                    svgLine.setAttribute('stroke', this.lineColor);
-                    svgLine.setAttribute('stroke-width', '2');
-                    svgLine.classList.add('line');
-                    svgLine.addEventListener('click', () => this.onLineClick(index));
-                    this.canvas.appendChild(svgLine);
-                });
-            }
-            
-            renderRegions() {
-                this.regions.forEach(region => {
-                    const polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-                    const points = region.points.map(pid => {
-                        const p = this.points[pid];
-                        return `${p.x},${p.y}`;
-                    }).join(' ');
-                    
-                    polygon.setAttribute('points', points);
-                    polygon.setAttribute('fill', region.color);
-                    polygon.setAttribute('stroke', 'none');
-                    polygon.classList.add('region');
-                    polygon.addEventListener('click', () => this.onRegionClick(region));
-                    this.canvas.appendChild(polygon);
-                });
-            }
-            
-            onPointClick(pointId) {
-                if (this.selectedPoint === null) {
-                    this.selectedPoint = pointId;
-                } else if (this.selectedPoint === pointId) {
-                    this.selectedPoint = null;
-                } else {
-                    // 創建線條
-                    const existingLine = this.lines.find(line => 
-                        (line.p1 === this.selectedPoint && line.p2 === pointId) ||
-                        (line.p1 === pointId && line.p2 === this.selectedPoint)
-                    );
-                    
-                    if (!existingLine) {
-                        this.lines.push({
-                            p1: this.selectedPoint,
-                            p2: pointId
-                        });
-                        this.findRegions();
-                    }
-                    
-                    this.selectedPoint = null;
-                }
-                this.render();
-            }
-            
-            onLineClick(lineIndex) {
-                this.lines.splice(lineIndex, 1);
-                this.findRegions();
-                this.render();
-            }
-            
-            onRegionClick(region) {
-                region.color = this.fillColor;
-                this.render();
-            }
-            
-            findRegions() {
-                this.regions = [];
-                
-                // 建立圖形結構
-                const graph = new Map();
-                this.points.forEach(point => {
-                    graph.set(point.id, []);
-                });
-                
-                // 添加邊
-                this.lines.forEach(line => {
-                    graph.get(line.p1).push(line.p2);
-                    graph.get(line.p2).push(line.p1);
-                });
-                
-                // 使用 DFS 尋找所有簡單環
-                const visited = new Set();
-                const cycles = [];
-                
-                const findCycles = (start, current, path) => {
-                    if (path.length > 2 && current === start) {
-                        // 找到環，檢查是否為最小環
-                        const sortedPath = [...path].sort((a, b) => a - b);
-                        const pathKey = sortedPath.join(',');
-                        if (!visited.has(pathKey)) {
-                            visited.add(pathKey);
-                            cycles.push([...path]);
-                        }
-                        return;
-                    }
-                    
-                    if (path.length >= 8) return; // 避免過長的路徑
-                    
-                    const neighbors = graph.get(current) || [];
-                    for (const neighbor of neighbors) {
-                        if (path.length > 1 && neighbor === path[path.length - 2]) continue; // 避免回到上一個點
-                        if (path.length > 2 && path.slice(0, -1).includes(neighbor) && neighbor !== start) continue; // 避免重複訪問（除了起點）
-                        
-                        findCycles(start, neighbor, [...path, neighbor]);
-                    }
-                };
-                
-                // 從每個點開始尋找環
-                this.points.forEach(point => {
-                    findCycles(point.id, point.id, [point.id]);
-                });
-                
-                // 過濾並轉換為區域
-                cycles.forEach(cycle => {
-                    if (cycle.length >= 4) { // 至少3個點組成的環（加上重複的起點）
-                        const region = cycle.slice(0, -1); // 移除重複的起點
-                        if (this.isValidRegion(region)) {
-                            this.regions.push({
-                                points: region,
-                                color: this.bgColor // 使用背景顏色作為預設
-                            });
-                        }
-                    }
-                });
-                
-                // 移除重複區域
-                this.regions = this.regions.filter((region, index) => {
-                    const regionKey = [...region.points].sort((a, b) => a - b).join(',');
-                    return this.regions.findIndex(r => {
-                        const rKey = [...r.points].sort((a, b) => a - b).join(',');
-                        return rKey === regionKey;
-                    }) === index;
-                });
-            }
-            
-            isValidRegion(pointIds) {
-                if (pointIds.length < 3) return false;
-                
-                // 檢查區域是否為簡單多邊形（無自相交）
-                const points = pointIds.map(id => this.points[id]);
-                
-                // 計算面積，如果為0則不是有效區域
-                let area = 0;
-                for (let i = 0; i < points.length; i++) {
-                    const j = (i + 1) % points.length;
-                    area += points[i].x * points[j].y;
-                    area -= points[j].x * points[i].y;
-                }
-                area = Math.abs(area) / 2;
-                
-                return area > 100; // 最小面積閾值
-            }
-            
-            exportSVG() {
-                // 創建完整的SVG內容
-                const canvasSize = this.canvasSize || 500;
-                const svgHeader = `<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" 
-     width="${canvasSize}" 
-     height="${canvasSize}" 
-     viewBox="0 0 ${canvasSize} ${canvasSize}">`;
-                
-                const svgFooter = `</svg>`;
-                
-                // 獲取畫布內容
-                const canvasContent = this.canvas.innerHTML;
-                const fullSvgContent = svgHeader + canvasContent + svgFooter;
-                
-                const blob = new Blob([fullSvgContent], { type: 'image/svg+xml;charset=utf-8' });
-                const url = URL.createObjectURL(blob);
-                
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'geometric-pattern.svg';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-            }
-            
-            exportPNG() {
-                const canvasSize = this.canvasSize || 500;
-                const svgHeader = `<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" 
-     width="${canvasSize}" 
-     height="${canvasSize}" 
-     viewBox="0 0 ${canvasSize} ${canvasSize}">`;
-                
-                const svgFooter = `</svg>`;
-                const canvasContent = this.canvas.innerHTML;
-                const fullSvgContent = svgHeader + canvasContent + svgFooter;
-                
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                const img = new Image();
-                
-                canvas.width = canvasSize;
-                canvas.height = canvasSize;
-                
-                img.onload = function() {
-                    ctx.drawImage(img, 0, 0);
-                    
-                    canvas.toBlob(function(blob) {
-                        const url = URL.createObjectURL(blob);
-                        const a = document.createElement('a');
-                        a.href = url;
-                        a.download = 'geometric-pattern.png';
-                        document.body.appendChild(a);
-                        a.click();
-                        document.body.removeChild(a);
-                        URL.revokeObjectURL(url);
-                    });
-                };
-                
-                const svgBlob = new Blob([fullSvgContent], { type: 'image/svg+xml;charset=utf-8' });
-                const svgUrl = URL.createObjectURL(svgBlob);
-                img.src = svgUrl;
-            }
-        }
-        
-        // 初始化應用
-        document.addEventListener('DOMContentLoaded', () => {
-            new GeometricDesigner();
-        });
-    </script>
+                <a href="#" class="nav-card" onclick="loadExtension('gallery')">
+                    <div class="card-icon"></div>
+                    <div class="card-title">視覺靈感</div>
+                    <div class="card-desc">攝影作品、設計草圖，以及激發創作靈感的影像收集</div>
+                </a>
+            </div>
+        </section>
+
+        <!-- 專案入口 -->
+        <section class="projects-portal">
+            <h3 class="portal-title">技術實驗室</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                程式專案與技術實驗的展示空間
+            </p>
+            <a href="#" class="portal-link" onclick="openProjectBrowser()">
+                進入實驗室
+            </a>
+        </section>
+
+        <footer class="footer">
+            <p>「在數位的夜空下，每個像素都是一顆星」</p>
+        </footer>
+    </div>
+
+    <script src="scripts.js"></script>
 </body>
 </html>
