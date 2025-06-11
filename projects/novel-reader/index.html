@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>novels-homepage</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="theme-control">
+        <button class="theme-btn" onclick="toggleTheme()">◐</button>
+    </div>
+
+    <div class="container">
+
+        <header class="header-section">
+            <h1 class="site-title">小說區主頁</h1>
+            <p class="site-subtitle">2.5 pro 在此扳回一城</p>
+            <hr class="divider"></hr>
+        </header>
+
+        <div class="discriptions">
+            <p>這裡會放各種來源的小說。</p>
+            <p>目前大多是 ai 寫的，模型使用 gemini 2.5 pro</p>
+            <p>若你有意願投稿(不管你寫的還是 ai 寫的)，歡迎聯繫我</p>
+            <p>discord: hidvenod</p>
+        </div>
+
+         <section class="nav-section">
+            <div class="section-header">
+                <h2 class="section-title">專案區</h2>
+                <p class="section-desc">一些我寫的或 ai 寫的東西，持續擴充中</p>
+            </div>
+            
+            <div class="nav-grid">
+                <a href="#" class="nav-card" onclick="loadExtension('novel-reader')">
+                    <div class="card-icon"></div>
+                    <div class="card-title">小說區</div>
+                    <div class="card-desc">目前會放 2.5pro 寫的小說，不定期更新</div>
+                </a>
+                
+                <a href="#" class="nav-card" onclick="loadExtension('blog')">
+                    <div class="card-icon"></div>
+                    <div class="card-title">隨筆記事</div>
+                    <div class="card-desc">日常感悟、創作心得，以及一些不成熟的想法記錄</div>
+                </a>
+                
+                <a href="#" class="nav-card" onclick="loadExtension('music-share')">
+                    <div class="card-icon"></div>
+                    <div class="card-title">音樂分享</div>
+                    <div class="card-desc">觸動心靈的旋律收藏，附上我的聆聽感受與推薦理由</div>
+                </a>
+                
+                <a href="#" class="nav-card" onclick="loadExtension('gallery')">
+                    <div class="card-icon"></div>
+                    <div class="card-title">視覺靈感</div>
+                    <div class="card-desc">攝影作品、設計草圖，以及激發創作靈感的影像收集</div>
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <script src="./script.js"></script>
+</body>

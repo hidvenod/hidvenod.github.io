@@ -1,0 +1,84 @@
+:root {
+    --bg-primary: #0a0a0f;
+    --bg-secondary: #212012;
+    --bg-tertiary: #1a1a25;
+    --accent-blue: #2d4263;
+    --accent-purple: #3d2f5a;
+    --accent-gold:#8c7234;
+    --text-primary: #e8e8f0;
+    --text-secondary: #a8a8b8;
+    --text-dim: #6a6a78;
+    --glow-cyan: #4fd1c7;
+    --glow-violet: #9d4edd;
+    --glow-gray:#686868;
+    --glow-white:#e8e8e8;
+    --glow-gold:#ffd700;
+    --line-subtle: #2a2a35;
+    --line-bright: #4a4a55;
+}
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--accent-gold) 100%);
+    color: var(--text-primary);
+    line-height: 1.7;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+} 
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem;
+    position: relative;
+    z-index: 2;
+}
+.header-section {
+    text-align: center;
+    padding: 4rem 0 3rem;
+    position: relative;
+}
+.site-title {
+    font-size: 2.8rem;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, var(--glow-white) 0%, var(--glow-gray) 80%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+}
+.site-subtitle {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    font-style: italic;
+    letter-spacing: 0.08em;
+    margin-bottom: 2rem;
+}
+.theme-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(26, 26, 37, 0.9);
+    border: 1px solid var(--line-bright);
+    color: var(--glow-gold);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    position: fixed;
+}
+.divider{
+    border: none;
+    color: var(--accent-gold);
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+}
+.discriptions{
+    text-align: center;
+    position: relative;
+    
+}

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hidvenod's page</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="particles"></div>
+    <div class="cursor-glow"></div>
+    <div class="theme-control">
+        <button class="theme-btn" onclick="toggleTheme()">◐</button>
+    </div>
+
+    <div class="container">
+        <!-- 頁面標題 -->
+        <header class="header-section">
+            <h1 class="site-title">hidvenod's page</h1>
+            <p class="site-subtitle">claude 4 還是太權威了，2.5 pro 拚盡全力無法戰勝</p>
+            <div class="curve-divider"></div>
+        </header>
+
+        <!-- 個人展示區 -->
+        <section class="showcase-section">
+            <div class="avatar-area">
+                <div class="avatar-frame">
+                    <div class="avatar-inner"></div>
+                </div>
+                <div class="username">凱歐</div>
+                <div class="user-title">賽博蛆蟲</div>
+            </div>
+            
+            <div class="personal-info">
+                <div class="info-group">
+                    <h3 class="info-title">最近在聽</h3>
+                    <div class="info-content">
+                        <ul class="info-list">
+                            <li>Chopin - Nocturne Op.9 No.2</li>
+                            <li>Ludovico Einaudi - Nuvole Bianche</li>
+                            <li>Max Richter - On The Nature of Daylight</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="info-group">
+                    <h3 class="info-title">最近在讀</h3>
+                    <div class="info-content">
+                        <ul class="info-list">
+                            <li>Brandon Sanderson - Stormlight Archive</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 功能導航 -->
+        <section class="nav-section">
+            <div class="section-header">
+                <h2 class="section-title">專案區</h2>
+                <p class="section-desc">一些我寫的或 ai 寫的東西，持續擴充中</p>
+            </div>
+            
+            <div class="nav-grid">
+                <a href="#" class="nav-card" onclick="loadExtension('novel-reader')">
+                    <div class="card-icon"></div>
+                    <div class="card-title">小說區</div>
+                    <div class="card-desc">目前會放 2.5pro 寫的小說，不定期更新</div>
+                </a>
+                
+                <a href="#" class="nav-card" onclick="loadExtension('blog')">
+                    <div class="card-icon"></div>
+                    <div class="card-title">隨筆記事</div>
+                    <div class="card-desc">日常感悟、創作心得，以及一些不成熟的想法記錄</div>
+                </a>
+                
+                <a href="#" class="nav-card" onclick="loadExtension('music-share')">
+                    <div class="card-icon"></div>
+                    <div class="card-title">音樂分享</div>
+                    <div class="card-desc">觸動心靈的旋律收藏，附上我的聆聽感受與推薦理由</div>
+                </a>
+                
+                <a href="#" class="nav-card" onclick="loadExtension('gallery')">
+                    <div class="card-icon"></div>
+                    <div class="card-title">視覺靈感</div>
+                    <div class="card-desc">攝影作品、設計草圖，以及激發創作靈感的影像收集</div>
+                </a>
+            </div>
+        </section>
+
+        <!-- 專案入口 -->
+        <section class="projects-portal">
+            <h3 class="portal-title">技術實驗室</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                程式專案與技術實驗的展示空間
+            </p>
+            <a href="#" class="portal-link" onclick="openProjectBrowser()">
+                進入實驗室
+            </a>
+        </section>
+
+        <footer class="footer">
+            <p>很明顯地，那些文謅謅的東西是claude寫的，我還沒改掉</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
