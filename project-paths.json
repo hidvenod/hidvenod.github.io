@@ -1,1 +1,4 @@
-{"novel-reader" : "./projects/novel-reader/index.html"}
+{
+    "novel-reader" : "./projects/novel-reader/index.html",
+    "grid-drawer" : "./projects/grid-drawer/index.html"
+}
