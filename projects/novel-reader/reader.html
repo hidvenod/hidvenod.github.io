@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小說閱讀器</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="reader-container">
+        <h1 id="chapter-title">讀取中...</h1>
+        
+        <div class="navigation-top">
+            <a href="index.html">返回書庫</a>
+            <button id="prev-chapter">上一章</button>
+            <button id="next-chapter">下一章</button>
+        </div>
+
+        <main id="novel-content">
+            <!-- 小說內文會被動態插入到這裡 -->
+        </main>
+
+        <div class="navigation-bottom">
+            <button id="prev-chapter-bottom">上一章</button>
+            <button id="next-chapter-bottom">下一章</button>
+        </div>
+    </div>
+
+    <script src="reader.js"></script>
+</body>
+</html>

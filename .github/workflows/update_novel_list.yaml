@@ -1,0 +1,56 @@
+name: Update Novel Reader Metadata
+
+on:
+  push:
+    branches:
+      - main # 或您的主要分支
+    # **重要**：監控子目錄中的檔案變更
+    paths:
+      - "projects/novel-reader/novels/**.txt"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    # **核心變更**：為此任務中的所有 run 指令設定預設工作目錄
+    defaults:
+      run:
+        working-directory: ./projects/novel-reader
+
+    steps:
+      # 步驟 1: 下載整個儲存庫的程式碼
+      # 這個步驟不受 working-directory 影響，它總是在根目錄 checkout
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 步驟 2: 設定 Python 環境
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      # 步驟 3: 執行腳本
+      # 因為設定了 working-directory，這個指令會在 ./projects/novel-reader/ 下執行
+      # 所以它可以正確地找到 scripts/generate_list.py
+      - name: Generate novel metadata
+        run: python scripts/generate_list.py
+
+      # 步驟 4: 提交變更
+      # Git 指令也會在 working-directory 中執行，但它們會正確地對整個儲存庫進行操作
+      - name: Commit and push changes
+        run: |
+          # 設定 git 的使用者資訊
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+          # 將被腳本修改過的檔案加入暫存區
+          # 注意：因為腳本會修改 book.json，所以也要把它們加進去
+          git add novels-list.json 'novels/**/book.json'
+
+          # 檢查是否有實際變更，如果沒有就不執行 commit
+          if ! git diff --staged --quiet; then
+            git commit -m "Automated: Update novel reader metadata"
+            git push
+          else
+            echo "No changes to commit."
+          fi

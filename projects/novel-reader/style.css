@@ -1,6 +1,6 @@
 :root {
-    --bg-primary: #0a0a0f;
-    --bg-secondary: #212012;
+    --bg-primary: hsl(56, 29%, 10%);
+    --bg-secondary: #92884d;
     --bg-tertiary: #1a1a25;
     --accent-blue: #2d4263;
     --accent-purple: #3d2f5a;
@@ -80,5 +80,4 @@ body {
 .discriptions{
     text-align: center;
     position: relative;
-    
 }
