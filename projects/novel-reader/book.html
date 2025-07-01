@@ -2,14 +2,37 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <title>目錄</title>
-    <!-- CSS連結 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>書籍目錄</title>
+    <link rel="stylesheet" href="./book.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1 id="book-title"></h1>
-    <div id="table-of-contents">
-        <!-- 目錄將由 JS 動態生成 -->
+    <!-- 背景動態特效容器 -->
+    <div class="particles"></div>
+
+    <div class="container">
+        <nav class="top-nav">
+            <a href="./index.html" class="back-link">&lt; 返回書庫</a>
+        </nav>
+
+        <!-- 書籍資訊頭部 -->
+        <header id="book-header" class="book-header">
+            <h1 id="book-title">讀取中...</h1>
+            <p id="book-author"></p>
+            <p id="book-description"></p>
+        </header>
+
+        <div class="divider"></div>
+
+        <!-- 章節列表 -->
+        <main id="toc-container" class="toc-container">
+            <!-- JS 將在此處填充卷和章節 -->
+        </main>
     </div>
-    <script src="book.js"></script>
+
+    <script src="./book.js"></script>
 </body>
 </html>

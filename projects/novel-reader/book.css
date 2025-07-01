@@ -1,0 +1,150 @@
+:root {
+    /* 沿用主頁的賽博奇幻風格 */
+    --bg-main: #0d0d1a;
+    --bg-card: rgba(20, 20, 40, 0.75);
+    --glow-blue: #00ffff;
+    --glow-magenta: #ff00ff;
+    --text-primary: #e0e0ff;
+    --text-secondary: #a0a0c0;
+    --border-color: rgba(0, 255, 255, 0.5);
+    --shadow-color: rgba(0, 255, 255, 0.5);
+
+    --font-pixel: 'Press Start 2P', cursive;
+    --font-body: 'Noto Sans TC', sans-serif;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    line-height: 1.7;
+    padding: 2rem;
+    overflow-x: hidden;
+}
+
+/* --- 動態背景 (與主頁相同) --- */
+.particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    background-color: var(--glow-blue);
+    border-radius: 50%;
+    opacity: 0.5;
+    animation: rise linear infinite;
+}
+
+@keyframes rise {
+    0% { transform: translateY(100vh) scale(1); opacity: 0.5; }
+    100% { transform: translateY(-10vh) scale(0.5); opacity: 0; }
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* --- 頂部導航 --- */
+.top-nav {
+    margin-bottom: 2rem;
+}
+
+.back-link {
+    color: var(--glow-blue);
+    text-decoration: none;
+    font-size: 1rem;
+    transition: text-shadow 0.3s ease;
+}
+
+.back-link:hover {
+    text-shadow: 0 0 5px var(--glow-blue);
+}
+
+/* --- 書籍資訊頭部 --- */
+.book-header {
+    text-align: center;
+    padding: 2rem 0;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    margin-bottom: 3rem;
+}
+
+#book-title {
+    font-family: var(--font-pixel);
+    font-size: 2rem;
+    color: var(--glow-magenta);
+    margin-bottom: 1rem;
+}
+
+#book-author {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+#book-description {
+    max-width: 600px;
+    margin: 0 auto;
+    color: var(--text-primary);
+}
+
+/* --- 分隔線 --- */
+.divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+    border: none;
+    margin-bottom: 3rem;
+}
+
+/* --- 章節列表 --- */
+.toc-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+.volume-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: 1.5rem 2rem;
+}
+
+.volume-title {
+    font-family: var(--font-pixel);
+    font-size: 1.2rem;
+    color: var(--glow-blue);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.chapter-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.chapter-list li a {
+    display: block;
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding: 0.5rem;
+    border-bottom: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.chapter-list li a:hover {
+    color: var(--text-primary);
+    background-color: rgba(0, 255, 255, 0.1);
+    border-bottom-color: var(--glow-magenta);
+}

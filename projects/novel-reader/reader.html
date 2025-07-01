@@ -3,29 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>小說閱讀器</title>
-    <link rel="stylesheet" href="style.css">
+    <title>閱讀器</title>
+    <link rel="stylesheet" href="./reader.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="reader-container">
-        <h1 id="chapter-title">讀取中...</h1>
-        
-        <div class="navigation-top">
-            <a href="index.html">返回書庫</a>
-            <button id="prev-chapter">上一章</button>
-            <button id="next-chapter">下一章</button>
-        </div>
+        <!-- 頂部固定導航欄 -->
+        <header class="reader-header">
+            <a id="back-to-toc" href="#" class="nav-button">返回目錄</a>
+            <h1 id="chapter-title">讀取中...</h1>
+            <div class="nav-group">
+                <button id="prev-chapter" class="nav-button">上一章</button>
+                <button id="next-chapter" class="nav-button">下一章</button>
+            </div>
+        </header>
 
-        <main id="novel-content">
-            <!-- 小說內文會被動態插入到這裡 -->
+        <!-- 小說內文區域 -->
+        <main id="novel-content" class="novel-content">
+            <!-- JS 會將段落插入此處 -->
         </main>
 
-        <div class="navigation-bottom">
-            <button id="prev-chapter-bottom">上一章</button>
-            <button id="next-chapter-bottom">下一章</button>
-        </div>
+        <!-- 底部導航，方便長文閱讀 -->
+        <footer class="reader-footer">
+            <button id="prev-chapter-bottom" class="nav-button">上一章</button>
+            <button id="next-chapter-bottom" class="nav-button">下一章</button>
+        </footer>
     </div>
 
-    <script src="reader.js"></script>
+    <script src="./reader.js"></script>
 </body>
 </html>

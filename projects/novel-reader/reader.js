@@ -1,11 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
     // --- 全域變數 ---
-    let allBooks = []; // 存放從 novels-list.json 讀取的完整書庫資料
-    let currentChapterInfo = null; // 存放目前章節的完整資訊 { bookTitle, volumeTitle, chapter }
+    let allBooksData = []; // 存放從 novels-list.json 讀取的完整書庫資料
+    let currentBook = null; // 存放目前閱讀的書籍資料 (book.json 的內容)
+    let currentChapterIndex = -1; // 目前章節在 currentBook.chaptersFlat 中的索引
+    let chaptersFlat = []; // 當前書籍所有章節的扁平化列表
 
     // --- DOM 元素 ---
     const chapterTitleEl = document.getElementById('chapter-title');
     const novelContentEl = document.getElementById('novel-content');
+    const backToTocBtn = document.getElementById('back-to-toc');
     const navButtons = {
         prev: [document.getElementById('prev-chapter'), document.getElementById('prev-chapter-bottom')],
         next: [document.getElementById('next-chapter'), document.getElementById('next-chapter-bottom')]
@@ -16,15 +19,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. 初始化：讀取書庫清單，然後根據 URL 載入章節
     async function initializeReader() {
         try {
-            const response = await fetch('novels-list.json');
-            allBooks = await response.json();
-            
+            // 讀取主列表以獲取所有書籍的元數據路徑
+            const listResponse = await fetch('./novels-list.json');
+            if (!listResponse.ok) throw new Error('無法載入書庫列表。');
+            const masterList = await listResponse.json();
+            allBooksData = masterList.books; // 儲存所有書籍的元數據
+
             // 首次載入或刷新頁面時，根據 URL 參數載入章節
             loadChapterFromUrl();
 
         } catch (error) {
             console.error("初始化失敗:", error);
-            displayError("無法載入書庫清單，請檢查 novels-list.json 檔案。");
+            displayError("無法載入書庫清單，請檢查 novels-list.json 檔案。", error.message);
         }
     }
 
@@ -42,13 +48,23 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!response.ok) throw new Error(`檔案讀取失敗 (HTTP ${response.status})`);
             
             const text = await response.text();
-            novelContentEl.textContent = text;
+            // 將文本按換行符分割，並用 <p> 標籤包裹每個段落
+            novelContentEl.innerHTML = text.split(/\r?\n/)
+                                         .filter(p => p.trim() !== '') // 過濾空行
+                                         .map(p => `<p>${p.trim()}</p>`).join('');
             
             // 更新目前章節資訊
-            currentChapterInfo = findChapterInfo(path);
-            if (currentChapterInfo) {
-                chapterTitleEl.textContent = currentChapterInfo.chapter.title;
-                document.title = `${currentChapterInfo.chapter.title} - ${currentChapterInfo.bookTitle}`; // 更新瀏覽器標籤頁標題
+            const chapterInfo = findChapterInfo(path);
+            if (chapterInfo) {
+                currentBook = chapterInfo.bookData;
+                chaptersFlat = chapterInfo.chaptersFlat;
+                currentChapterIndex = chapterInfo.chapterIndex;
+
+                chapterTitleEl.textContent = chapterInfo.chapter.title;
+                document.title = `${chapterInfo.chapter.title} - ${chapterInfo.bookData.title}`;
+                
+                // 更新返回目錄連結
+                backToTocBtn.href = `book.html?slug=${encodeURIComponent(currentBook.slug)}`;
             }
             
             // 更新導覽按鈕的狀態
@@ -56,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } catch (error) {
             console.error("載入章節失敗:", error);
-            displayError(`載入章節 ${path} 失敗。`);
+            displayError(`載入章節 ${path} 失敗。`, error.message);
         }
     }
 
@@ -64,7 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateUrlForChapter(path) {
         const url = new URL(window.location);
         url.searchParams.set('path', path);
-        // pushState(stateObject, title, url)
         history.pushState({ path: path }, '', url.href);
     }
     
@@ -81,20 +96,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 5. 更新上下章按鈕的可用狀態
     function updateNavigation() {
-        const { prev, next } = findAdjacentChapters(currentChapterInfo.chapter.path);
-        
-        navButtons.prev.forEach(btn => btn.disabled = !prev);
-        navButtons.next.forEach(btn => btn.disabled = !next);
+        navButtons.prev.forEach(btn => btn.disabled = (currentChapterIndex <= 0));
+        navButtons.next.forEach(btn => btn.disabled = (currentChapterIndex >= chaptersFlat.length - 1));
     }
 
     // --- 事件處理 ---
 
     // 處理點擊上一章/下一章
     function handleNavigationClick(direction) {
-        const { prev, next } = findAdjacentChapters(currentChapterInfo.chapter.path);
-        const targetPath = (direction === 'next') ? next : prev;
-        
-        if (targetPath) {
+        let targetIndex = currentChapterIndex;
+        if (direction === 'next') {
+            targetIndex++;
+        } else {
+            targetIndex--;
+        }
+
+        if (targetIndex >= 0 && targetIndex < chaptersFlat.length) {
+            const targetPath = chaptersFlat[targetIndex].path;
             loadChapter(targetPath);
             updateUrlForChapter(targetPath);
         }
@@ -106,11 +124,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 監聽瀏覽器的前進/後退按鈕
     window.addEventListener('popstate', (event) => {
-        // 當使用者點擊瀏覽器 back/forward 時，從 state 中讀取路徑並載入
         if (event.state && event.state.path) {
             loadChapter(event.state.path);
         } else {
-            // 如果 state 為空 (例如，回到了最初的頁面)，則重新從 URL 讀取
             loadChapterFromUrl();
         }
     });
@@ -119,36 +135,35 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 輔助工具函式 ---
 
     // 在書庫資料中尋找指定路徑的章節詳細資訊
-    function findChapterInfo(path) {
-        for (const book of allBooks) {
-            for (const volume of book.volumes) {
-                const chapter = volume.chapters.find(c => c.path === path);
-                if (chapter) {
-                    return { bookTitle: book.title, volumeTitle: volume.title, chapter };
-                }
+    async function findChapterInfo(chapterPath) {
+        for (const bookMeta of allBooksData) {
+            // 讀取每本書的 book.json
+            const bookResponse = await fetch(bookMeta.meta_path);
+            if (!bookResponse.ok) {
+                console.warn(`無法載入書籍元數據：${bookMeta.meta_path}`);
+                continue;
+            }
+            const bookData = await bookResponse.json();
+            
+            // 扁平化章節列表以便查找索引
+            const chapters = bookData.volumes.flatMap(vol => vol.chapters);
+            const chapterIndex = chapters.findIndex(c => c.path === chapterPath);
+
+            if (chapterIndex !== -1) {
+                return {
+                    bookData: bookData,
+                    chaptersFlat: chapters,
+                    chapter: chapters[chapterIndex],
+                    chapterIndex: chapterIndex
+                };
             }
         }
         return null;
     }
 
-    // 尋找相鄰的章節路徑
-    function findAdjacentChapters(path) {
-        let prev = null, next = null;
-        let allChaptersFlat = allBooks.flatMap(b => b.volumes).flatMap(v => v.chapters);
-        const currentIndex = allChaptersFlat.findIndex(c => c.path === path);
-
-        if (currentIndex > 0) {
-            prev = allChaptersFlat[currentIndex - 1].path;
-        }
-        if (currentIndex < allChaptersFlat.length - 1) {
-            next = allChaptersFlat[currentIndex + 1].path;
-        }
-        return { prev, next };
-    }
-
-    function displayError(message) {
+    function displayError(message, details = '') {
         chapterTitleEl.textContent = '錯誤';
-        novelContentEl.innerHTML = `<p style="color: red;">${message}</p>`;
+        novelContentEl.innerHTML = `<p style="color: #ff6b6b;">${message}</p><p style="color: #ff6b6b; font-size: 0.9em;">${details}</p>`;
     }
     
     function displayLoading() {

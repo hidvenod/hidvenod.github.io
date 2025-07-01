@@ -1,30 +1,222 @@
 :root {
-    --bg-primary: hsl(56, 29%, 10%);
-    --bg-secondary: #92884d;
-    --bg-tertiary: #1a1a25;
-    --accent-blue: #2d4263;
-    --accent-purple: #3d2f5a;
-    --accent-gold:#8c7234;
-    --text-primary: #e8e8f0;
-    --text-secondary: #a8a8b8;
-    --text-dim: #6a6a78;
-    --glow-cyan: #4fd1c7;
-    --glow-violet: #9d4edd;
-    --glow-gray:#686868;
-    --glow-white:#e8e8e8;
-    --glow-gold:#ffd700;
-    --line-subtle: #2a2a35;
-    --line-bright: #4a4a55;
+    /* 賽博奇幻風格色彩配置 */
+    --bg-main: #0d0d1a;
+    --bg-card: rgba(20, 20, 40, 0.85);
+    --bg-card-hover: rgba(30, 30, 60, 0.95);
+    --glow-blue: #00ffff;
+    --glow-magenta: #ff00ff;
+    --glow-green: #00ff00;
+    --glow-yellow: #ffff00;
+    --text-primary: #e0e0ff;
+    --text-secondary: #a0a0c0;
+    --border-color: rgba(0, 255, 255, 0.5);
+    --border-hover: rgba(255, 0, 255, 0.8);
+    --shadow-color: rgba(0, 255, 255, 0.5);
+    --sidebar-width: 240px;
+    
+    /* 字體 */
+    --font-pixel: 'zpix', cursive;
+    --font-body: 'Noto Sans TC', sans-serif;
 }
+
+@font-face {
+    font-family: 'zpix';
+    src: url('fonts/zpix.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+* {
+    box-sizing: border-box;
+}
+
 body {
-    font-family: 'Georgia', 'Times New Roman', serif;
-    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--accent-gold) 100%);
+    background-color: var(--bg-main);
     color: var(--text-primary);
+    font-family: var(--font-body);
     line-height: 1.7;
-    min-height: 100vh;
+    padding-left: var(--sidebar-width);
     overflow-x: hidden;
+    margin: 0;
+    
+    /* 像素完美渲染 */
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
+
+/* --- 動態背景增強 --- */
+.particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(0, 255, 0, 0.05) 0%, transparent 50%);
+}
+
+.particle {
+    position: absolute;
+    border-radius: 0; /* 移除圓角，更像素化 */
+    opacity: 0.7;
+    animation: rise linear infinite, pulse 2s ease-in-out infinite alternate;
+    box-shadow: 
+        0 0 2px currentColor,
+        0 0 4px currentColor;
+}
+
+@keyframes rise {
+    0% {
+        transform: translateY(100vh) translateX(0) scale(1);
+        opacity: 0.7;
+    }
+    50% {
+        transform: translateY(50vh) translateX(10px) scale(1.2);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-10vh) translateX(-5px) scale(0.8);
+        opacity: 0;
+    }
+}
+
+@keyframes pulse {
+    0% { opacity: 0.4; }
+    100% { opacity: 0.8; }
+}
+
+/* --- 側邊導航欄增強 --- */
+.sidebar-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--sidebar-width);
+    height: 100vh;
+    background: 
+        linear-gradient(135deg, rgba(13, 13, 26, 0.95), rgba(20, 20, 40, 0.95)),
+        repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 255, 255, 0.03) 2px,
+            rgba(0, 255, 255, 0.03) 4px
+        );
+    border-right: 2px solid var(--border-color);
+    padding: 2rem 1rem;
+    overflow-y: auto;
+    backdrop-filter: blur(8px);
+    box-shadow: 
+        inset -2px 0 4px rgba(0, 255, 255, 0.2),
+        2px 0 8px rgba(0, 0, 0, 0.5);
+}
+
+.sidebar-nav::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px; /* 改回2px */
+    background: linear-gradient(90deg, /* 確保是水平漸層 */
+        transparent, 
+        var(--glow-blue), 
+        var(--glow-magenta), 
+        var(--glow-blue), 
+        transparent
+    );
+    animation: scanHorizontal 3s linear infinite;
+}
+
+@keyframes scanHorizontal {
+    0% { 
+        transform: translateX(-100%); 
+        width: 100%;
+    }
+    100% { 
+        transform: translateX(100%);
+        width: 100%;
+    }
+}
+
+@keyframes scan {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.sidebar-title {
+    font-family: var(--font-pixel);
+    font-size: 1rem;
+    color: var(--glow-blue);
+    text-align: center;
+    margin-bottom: 2rem;
+    text-shadow: 
+        0 0 5px var(--glow-blue),
+        0 0 10px var(--glow-blue),
+        1px 1px 0 #000,
+        -1px -1px 0 #000;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    0% { text-shadow: 0 0 5px var(--glow-blue), 0 0 10px var(--glow-blue), 1px 1px 0 #000, -1px -1px 0 #000; }
+    100% { text-shadow: 0 0 8px var(--glow-blue), 0 0 15px var(--glow-blue), 0 0 20px var(--glow-magenta), 1px 1px 0 #000, -1px -1px 0 #000; }
+}
+
+#sidebar-book-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#sidebar-book-list li a {
+    display: block;
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    border-left: 3px solid transparent;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    transition: all 0.3s ease;
     position: relative;
-} 
+    overflow: hidden;
+    font-family: var(--font-pixel);
+    font-size: 0.9rem;
+}
+
+#sidebar-book-list li a::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+#sidebar-book-list li a:hover {
+    background: var(--bg-card-hover);
+    color: var(--text-primary);
+    border-left-color: var(--glow-magenta);
+    border-color: var(--border-hover);
+    box-shadow: 
+        0 0 10px rgba(255, 0, 255, 0.3),
+        inset 0 0 10px rgba(0, 255, 255, 0.1);
+    transform: translateX(5px);
+}
+
+#sidebar-book-list li a:hover::before {
+    left: 100%;
+}
+
+/* --- 主內容區增強 --- */
 .container {
     max-width: 1000px;
     margin: 0 auto;
@@ -32,52 +224,397 @@ body {
     position: relative;
     z-index: 2;
 }
+
+/* 標題樣式增強 */
 .header-section {
     text-align: center;
-    padding: 4rem 0 3rem;
+    padding: 3rem 0;
     position: relative;
 }
+
+.header-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 3px;
+}
+
+
 .site-title {
-    font-size: 2.8rem;
-    font-weight: 300;
-    letter-spacing: 0.15em;
+    font-family: var(--font-pixel);
+    font-size: 2.5rem;
+    color: var(--glow-blue);
+    text-shadow: 
+        0 0 5px var(--glow-blue), 
+        0 0 10px var(--glow-magenta), 
+        0 0 15px var(--glow-magenta),
+        2px 2px 0 #000,
+        -2px -2px 0 #000,
+        2px -2px 0 #000,
+        -2px 2px 0 #000;
     margin-bottom: 1rem;
-    background: linear-gradient(135deg, var(--glow-white) 0%, var(--glow-gray) 80%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    animation: titlePulse 3s ease-in-out infinite;
     position: relative;
 }
+
+@keyframes titlePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
 .site-subtitle {
     color: var(--text-secondary);
     font-size: 1rem;
-    font-style: italic;
-    letter-spacing: 0.08em;
-    margin-bottom: 2rem;
+    letter-spacing: 2px;
+    font-family: var(--font-pixel);
+    animation: subtitleFlicker 4s ease-in-out infinite;
 }
-.theme-btn {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: rgba(26, 26, 37, 0.9);
-    border: 1px solid var(--line-bright);
-    color: var(--glow-gold);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    position: fixed;
+
+@keyframes subtitleFlicker {
+    0%, 98%, 100% { opacity: 1; }
+    99% { opacity: 0.7; }
 }
-.divider{
-    border: none;
-    color: var(--accent-gold);
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
-}
-.discriptions{
+
+.section-title {
+    font-family: var(--font-pixel);
+    font-size: 1.5rem;
+    color: var(--text-primary);
     text-align: center;
+    margin-bottom: 2rem;
+    text-shadow: 
+        0 0 5px currentColor,
+        1px 1px 0 #000,
+        -1px -1px 0 #000;
     position: relative;
+}
+
+.section-title::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--glow-blue), transparent);
+    animation: underlineExpand 2s ease-in-out infinite alternate;
+}
+
+@keyframes underlineExpand {
+    0% { width: 50px; }
+    100% { width: 150px; }
+}
+
+/* 分隔線增強 */
+.divider {
+    height: 3px;
+    background: var(--bg-main);
+    border: none;
+    margin: 4rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.divider::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        var(--glow-blue), 
+        var(--glow-magenta), 
+        var(--glow-blue), 
+        transparent
+    );
+    animation: dividerFlow 3s linear infinite;
+}
+
+@keyframes dividerFlow {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(200%); }
+}
+
+/* 卡片網格佈局 */
+.book-grid, .recent-updates-grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.book-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+.recent-updates-grid {
+    grid-template-columns: 1fr;
+}
+
+/* 書籍卡片增強 */
+.book-card {
+    background: var(--bg-card);
+    border: 2px solid var(--border-color);
+    padding: 1.5rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(4px);
+    position: relative;
+    overflow: hidden;
+    
+    /* 像素化邊框效果 */
+    box-shadow: 
+        inset 0 0 0 1px rgba(0, 255, 255, 0.3),
+        0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.book-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(0, 255, 255, 0.1), 
+        rgba(255, 0, 255, 0.1), 
+        transparent
+    );
+    transition: left 0.6s ease;
+}
+
+.book-card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border: 2px solid transparent;
+    background: linear-gradient(45deg, var(--glow-blue), var(--glow-magenta)) border-box;
+    mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    mask-composite: subtract;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.book-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 
+        0 0 20px var(--shadow-color),
+        0 0 40px rgba(255, 0, 255, 0.3),
+        inset 0 0 20px rgba(0, 255, 255, 0.1);
+    border-color: var(--glow-magenta);
+    background: var(--bg-card-hover);
+}
+
+.book-card:hover::before {
+    left: 100%;
+}
+
+.book-card:hover::after {
+    opacity: 1;
+}
+
+.book-card-title {
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    font-family: var(--font-pixel);
+    text-shadow: 1px 1px 0 #000;
+    transition: color 0.3s ease;
+}
+
+.book-card:hover .book-card-title {
+    color: var(--glow-blue);
+    text-shadow: 
+        0 0 5px var(--glow-blue),
+        1px 1px 0 #000;
+}
+
+.book-card-author, .book-card-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.book-card:hover .book-card-author,
+.book-card:hover .book-card-desc {
+    color: var(--text-primary);
+}
+
+/* 最近更新連結增強 */
+.recent-chapter-link {
+    background: var(--bg-card);
+    border-left: 4px solid var(--border-color);
+    border: 2px solid var(--border-color);
+    padding: 1rem 1.5rem;
+    text-decoration: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(4px);
+}
+
+.recent-chapter-link::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(0, 255, 255, 0.15), 
+        transparent
+    );
+    transition: left 0.5s ease;
+}
+
+.recent-chapter-link:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+    box-shadow: 
+        0 0 15px rgba(255, 0, 255, 0.3),
+        inset 0 0 15px rgba(0, 255, 255, 0.1);
+    transform: translateX(10px);
+}
+
+.recent-chapter-link:hover::before {
+    left: 100%;
+}
+
+.recent-chapter-title {
+    font-weight: bold;
+    color: var(--text-primary);
+    font-family: var(--font-pixel);
+    font-size: 0.95rem;
+    text-shadow: 1px 1px 0 #000;
+    transition: all 0.3s ease;
+}
+
+.recent-chapter-link:hover .recent-chapter-title {
+    color: var(--glow-blue);
+    text-shadow: 
+        0 0 5px var(--glow-blue),
+        1px 1px 0 #000;
+}
+
+.recent-book-title {
+    font-size: 0.9em;
+    color: var(--text-secondary);
+    margin-left: 1rem;
+    transition: color 0.3s ease;
+}
+
+.recent-chapter-link:hover .recent-book-title {
+    color: var(--glow-yellow);
+}
+
+.recent-update-time {
+    font-size: 0.9em;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    font-family: var(--font-pixel);
+    transition: color 0.3s ease;
+}
+
+.recent-chapter-link:hover .recent-update-time {
+    color: var(--glow-green);
+    text-shadow: 0 0 3px var(--glow-green);
+}
+
+/* 頁腳增強 */
+.footer-section {
+    text-align: center;
+    margin-top: 4rem;
+    color: var(--text-secondary);
+    font-family: var(--font-pixel);
+    padding: 2rem;
+    border-top: 2px solid var(--border-color);
+    background: rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.footer-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+
+}
+
+/* 響應式設計增強 */
+@media (max-width: 768px) {
+    body {
+        padding-left: 0;
+    }
+    
+    .sidebar-nav {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 1000;
+    }
+    
+    .sidebar-nav.active {
+        transform: translateX(0);
+    }
+    
+    .container {
+        padding: 1rem;
+    }
+    
+    .site-title {
+        font-size: 2rem;
+    }
+    
+    .book-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 滾動條樣式 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-main);
+    border: 1px solid var(--border-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--glow-blue), var(--glow-magenta));
+    border-radius: 0;
+    transition: none; /* 移除過渡效果 */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--glow-magenta), var(--glow-blue));
+    box-shadow: 0 0 5px var(--glow-blue);
+    transition: none; /* 移除過渡效果 */
+}
+
+/* 選擇文字樣式 */
+::selection {
+    background: var(--glow-magenta);
+    color: var(--bg-main);
+    text-shadow: none;
+}
+
+::-moz-selection {
+    background: var(--glow-magenta);
+    color: var(--bg-main);
+    text-shadow: none;
 }

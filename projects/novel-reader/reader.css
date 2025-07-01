@@ -1,0 +1,107 @@
+:root {
+    --reader-bg: #1a1a1a; /* 深灰色背景 */
+    --reader-text: #e0e0e0; /* 舒適的灰白色文字 */
+    --reader-link: #4d94ff; /* 連結顏色 */
+    --reader-border: #333;
+    --font-serif: 'Noto Serif TC', serif; /* 襯線字體，適合長時間閱讀 */
+}
+
+body {
+    background-color: var(--reader-bg);
+    color: var(--reader-text);
+    font-family: var(--font-serif);
+    margin: 0;
+}
+
+.reader-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* --- 頂部固定導航 --- */
+.reader-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(26, 26, 26, 0.9);
+    backdrop-filter: blur(5px);
+    border-bottom: 1px solid var(--reader-border);
+    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+}
+
+#chapter-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-align: center;
+    margin: 0;
+    color: var(--reader-text);
+    /* 讓標題在空間不足時可以被省略 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.nav-button {
+    background: transparent;
+    border: 1px solid var(--reader-border);
+    color: var(--reader-link);
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-family: var(--font-serif);
+    font-size: 0.9rem;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.2s, color 0.2s;
+    white-space: nowrap;
+}
+
+.nav-button:hover:not(:disabled) {
+    background-color: var(--reader-link);
+    color: var(--reader-bg);
+}
+
+.nav-button:disabled {
+    color: #666;
+    border-color: #444;
+    cursor: not-allowed;
+}
+
+.nav-group {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* --- 內文區域 --- */
+.novel-content {
+    /* 為頂部固定導航欄留出空間 */
+    padding-top: 60px; 
+    padding-bottom: 80px; /* 為底部導航留出空間 */
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+.novel-content p {
+    margin: 0 0 1.5rem 0; /* 段落下邊距 */
+    text-indent: 2em; /* 首行縮排 */
+}
+
+/* --- 底部導航 --- */
+.reader-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(26, 26, 26, 0.9);
+    border-top: 1px solid var(--reader-border);
+    padding: 0.75rem 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    z-index: 10;
+}

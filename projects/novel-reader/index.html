@@ -3,52 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>novels-homepage</title>
+    <title>小說書庫</title>
     <link rel="stylesheet" href="./style.css">
+    <!-- 引入像素字體和一個清晰的內文字體 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="theme-control">
-        <button class="theme-btn" onclick="toggleTheme()">◐</button>
-    </div>
+    <!-- 背景動態特效容器 -->
+    <div class="particles"></div>
 
+    <!-- 左側固定導航欄 -->
+    <nav class="sidebar-nav">
+        <h3 class="sidebar-title">書庫導航</h3>
+        <ul id="sidebar-book-list">
+            <!-- JS 將在此處填充書籍連結 -->
+        </ul>
+    </nav>
+
+    <!-- 主內容容器 -->
     <div class="container">
-
         <header class="header-section">
-            <h1 class="site-title">小說區</h1>
-            <div class="divider"></div>
+            <h1 class="site-title">異世界書庫</h1>
+            <p class="site-subtitle">一個充滿魔法與冒險的傳送門</p>
         </header>
 
-        <div class="discriptions">
-            <p>這裡會放各種來源的小說。</p>
-            <p>目前大多是 ai 寫的，模型使用 gemini 2.5 pro</p>
-            <p>若你有意願投稿(不管你寫的還是 ai 寫的)，歡迎聯繫我</p>
-            <p>discord: hidvenod</p>
-        </div>
+        <div class="divider"></div>
 
-        <section class="nav-section">
-            <div class="nav-grid">
-                <a href="#" class="nav-card" onclick="loadExtension('novel-reader')">
-                    <div class="card-icon"></div>
-                    <div class="card-title">近期更新</div>
-                    <div class="card-desc">目前會放 2.5pro 寫的小說，不定期更新</div>
-                </a>
+        <!-- 最近更新區 -->
+        <section id="recent-updates-section" class="content-section">
+            <h2 class="section-title">-- 最新章節傳送 --</h2>
+            <div id="recent-updates-container" class="recent-updates-grid">
+                <!-- JS 將在此處填充最近更新的章節 -->
             </div>
         </section>
 
-        <section class="nav-section">
-            <div class="section-header">
-                <h2 class="section-title">目錄</h2>
-            </div>
-            
-            <div class="nav-grid">
-                <a href="#" class="nav-card" onclick="loadExtension('novel-reader')">
-                    <div class="card-icon"></div>
-                    <div class="card-title">小說區</div>
-                    <div class="card-desc">目前會放 2.5pro 寫的小說，不定期更新</div>
-                </a>
+        <div class="divider"></div>
+
+        <!-- 書籍列表區 -->
+        <section id="library-section" class="content-section">
+            <h2 class="section-title">-- 所有書目 --</h2>
+            <div id="book-library-container" class="book-grid">
+                <!-- JS 將在此處填充所有書籍的卡片 -->
             </div>
         </section>
+
+        <footer class="footer-section">
+            <p>聯繫方式 Discord: hidvenod</p>
+        </footer>
     </div>
 
     <script src="./script.js"></script>
 </body>
+</html>

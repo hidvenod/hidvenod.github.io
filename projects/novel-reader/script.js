@@ -1,75 +1,120 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Default to dark mode if nothing is set, and apply theme
-    isDarkMode = localStorage.getItem('themeMode') !== 'blue';
-    applyTheme();
-});
+    const recentUpdatesContainer = document.getElementById('recent-updates-container');
+    const bookLibraryContainer = document.getElementById('book-library-container');
+    const sidebarBookList = document.getElementById('sidebar-book-list');
+    const particlesContainer = document.querySelector('.particles');
 
-let isDarkMode;
+    // --- 動態背景 --- //
+    function createParticles() {
+        const particleCount = 50; // 粒子數量
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
 
-function applyTheme() {
-    const root = document.documentElement;
-    const themeBtn = document.querySelector('.theme-btn');
+            const size = Math.random() * 5 + 1; // 1px to 6px
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
 
-    if (isDarkMode) {
-        // Original dark theme
-        root.style.setProperty('--bg-primary', '#0a0a0f');
-        root.style.setProperty('--bg-secondary', '#12121a');
-        root.style.setProperty('--accent-blue', '#2d4263');
-        root.style.setProperty('--accent-purple', '#3d2f5a');
-        if (themeBtn) themeBtn.textContent = '◐';
-    } else {
-        // Deep blue theme
-        root.style.setProperty('--bg-primary', '#0f1419');
-        root.style.setProperty('--bg-secondary', '#1a202c');
-        root.style.setProperty('--accent-blue', '#2d3748');
-        root.style.setProperty('--accent-purple', '#553c9a');
-        if (themeBtn) themeBtn.textContent = '◑';
-    }
-}
+            // 隨機顏色
+            const color = Math.random() > 0.5 ? 'var(--glow-blue)' : 'var(--glow-magenta)';
+            particle.style.backgroundColor = color;
 
-function toggleTheme() {
-    isDarkMode = !isDarkMode;
-    localStorage.setItem('themeMode', isDarkMode ? 'dark' : 'blue');
-    applyTheme();
-}
+            particle.style.left = `${Math.random() * 100}%`;
+            // 動畫延遲，讓粒子錯開出現
+            const delay = Math.random() * 20;
+            const duration = Math.random() * 20 + 10; // 10s to 30s
+            particle.style.animationDelay = `${delay}s`;
+            particle.style.animationDuration = `${duration}s`;
 
-async function getNovelsList(extensionName) {
-    try {
-        const response = await fetch("./novels/novels-list.json");
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            particlesContainer.appendChild(particle);
         }
-        const jsonData = await response.json();
-        return jsonData[extensionName];
-    } catch (error) {
-        console.error("Fetching project paths failed:", error);
-        return null;
     }
-}
 
-async function loadExtension(element, extensionName) {
-    const grid = element.closest('.nav-grid');
-    if (!grid) return;
+    // --- 主函數：獲取數據並渲染頁面 --- //
+    async function initializePage() {
+        try {
+            const response = await fetch('./novels-list.json');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
 
-    grid.innerHTML = '<div class="card-desc" style="text-align: center; width: 100%;">載入中...</div>';
+            // 渲染主內容
+            renderRecentUpdates(data.recent_chapters || []);
+            renderBookLibrary(data.books || []);
+            
+            // 渲染側邊欄
+            renderSidebar(data.books || []);
 
-    const novelList = await getNovelsList(extensionName);
+        } catch (error) {
+            console.error("頁面初始化失敗:", error);
+            recentUpdatesContainer.innerHTML = '<p style="text-align: center; color: var(--glow-magenta);">無法載入最近更新。</p>';
+            bookLibraryContainer.innerHTML = '<p style="text-align: center; color: var(--glow-magenta);">無法載入書庫。</p>';
+        }
+    }
 
-    if (novelList && Array.isArray(novelList) && novelList.length > 0) {
-        grid.innerHTML = ''; // Clear loading indicator
-        
-        novelList.forEach(novel => {
-            const novelCard = document.createElement('a');
-            novelCard.href = `reader.html?file=${encodeURIComponent(novel.file)}`;
-            novelCard.className = 'nav-card';
-            novelCard.innerHTML = `
-                <div class="card-icon"></div>
-                <div class="card-title">${novel.title}</div>
-                <div class="card-desc">${novel.author || '點此閱讀'}</div>
+    // 渲染最近更新的章節
+    function renderRecentUpdates(chapters) {
+        if (chapters.length === 0) {
+            recentUpdatesContainer.innerHTML = '<p style="text-align: center;">暫無更新記錄。</p>';
+            return;
+        }
+        recentUpdatesContainer.innerHTML = '';
+        chapters.forEach(chapter => {
+            const link = document.createElement('a');
+            link.href = `reader.html?path=${encodeURIComponent(chapter.path)}`;
+            link.className = 'recent-chapter-link';
+            const updateDate = new Date(chapter.created_at);
+            const timeString = `${updateDate.getMonth() + 1}/${updateDate.getDate()}`;
+            link.innerHTML = `
+                <div>
+                    <span class="recent-chapter-title">${chapter.chapter_title}</span>
+                    <span class="recent-book-title">[${chapter.book_title}]</span>
+                </div>
+                <span class="recent-update-time">${timeString}</span>
             `;
-            grid.appendChild(novelCard);
+            recentUpdatesContainer.appendChild(link);
         });
-    } else {
-        grid.innerHTML = '<p style="text-align: center; width: 100%;">無法載入小說列表或列表為空。</p>';
     }
-}
+
+    // 渲染書庫中的所有書籍
+    function renderBookLibrary(books) {
+        if (books.length === 0) {
+            bookLibraryContainer.innerHTML = '<p style="text-align: center;">書庫為空。</p>';
+            return;
+        }
+        bookLibraryContainer.innerHTML = '';
+        books.forEach(book => {
+            const card = document.createElement('a');
+            card.href = `book.html?slug=${encodeURIComponent(book.slug)}`;
+            card.className = 'book-card';
+            card.innerHTML = `
+                <h3 class="book-card-title">${book.title}</h3>
+                <p class="book-card-author">作者：${book.author || '未知'}</p>
+                <p class="book-card-desc">${book.description || '暫無簡介'}</p>
+            `;
+            bookLibraryContainer.appendChild(card);
+        });
+    }
+
+    // 渲染側邊導航欄
+    function renderSidebar(books) {
+        if (books.length === 0) {
+            sidebarBookList.innerHTML = '<li><a href="#">書庫為空</a></li>';
+            return;
+        }
+        sidebarBookList.innerHTML = '';
+        books.forEach(book => {
+            const listItem = document.createElement('li');
+            const link = document.createElement('a');
+            link.href = `book.html?slug=${encodeURIComponent(book.slug)}`;
+            link.textContent = book.title;
+            listItem.appendChild(link);
+            sidebarBookList.appendChild(listItem);
+        });
+    }
+
+    // --- 程式入口 ---
+    createParticles();
+    initializePage();
+});
