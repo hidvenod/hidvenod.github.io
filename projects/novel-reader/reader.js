@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                          .map(p => `<p>${p.trim()}</p>`).join('');
             
             // 更新目前章節資訊
-            const chapterInfo = findChapterInfo(path);
+            const chapterInfo = await findChapterInfo(path);
             if (chapterInfo) {
                 currentBook = chapterInfo.bookData;
                 chaptersFlat = chapterInfo.chaptersFlat;
