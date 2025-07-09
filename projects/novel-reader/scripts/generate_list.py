@@ -5,11 +5,18 @@ import unicodedata
 import re
 
 # --- 設定區 ---
-NOVOS_DIR = 'novels'
-MASTER_LIST_FILE = 'novels-list.json'
+# 取得此腳本檔案所在的目錄
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+# 假設專案根目錄是 scripts 資料夾的上一層
+PROJECT_ROOT = os.path.dirname(SCRIPT_DIR) 
+
+# 使用絕對路徑來定義檔案和資料夾
+NOVOS_DIR = os.path.join(PROJECT_ROOT, 'novels')
+MASTER_LIST_FILE = os.path.join(PROJECT_ROOT, 'novels-list.json')
 BOOK_META_FILENAME = 'book.json'
 RECENT_CHAPTERS_COUNT = 10
 
+# ... 後面的程式碼不變 ...
 def generate_slug(text):
     text = unicodedata.normalize('NFKD', text).encode('ascii', 'ignore').decode('ascii')
     text = re.sub(r'[^\w\s-]', '', text).strip().lower()
@@ -57,18 +64,23 @@ def update_metadata():
                 if not file.endswith('.txt'):
                     continue
                 
+                # ... 在 for file in files: 迴圈內部 ...
+
                 full_path = os.path.join(root, file).replace(os.sep, '/')
                 mtime = os.path.getmtime(full_path)
                 timestamp = datetime.fromtimestamp(mtime).isoformat() + "Z"
+
+                # 【關鍵修改】將絕對路徑轉換為相對於專案根目錄的相對路徑
+                relative_path = os.path.relpath(full_path, PROJECT_ROOT).replace(os.sep, '/')
                 
                 if timestamp > latest_update_time:
                     latest_update_time = timestamp
 
                 # 檢查章節是否已存在
-                if full_path in chapters_map:
+                if relative_path in chapters_map:
                     # 更新時間戳記
-                    if chapters_map[full_path]['updated_at'] != timestamp:
-                        chapters_map[full_path]['updated_at'] = timestamp
+                    if chapters_map[relative_path]['updated_at'] != timestamp:
+                        chapters_map[relative_path]['updated_at'] = timestamp
                         book_has_changed = True
                 else:
                     # 發現新章節！
@@ -78,7 +90,7 @@ def update_metadata():
                     
                     new_chapter = {
                         "title": chapter_title_str,
-                        "path": full_path,
+                        "path": relative_path,
                         "created_at": timestamp,
                         "updated_at": timestamp
                     }
