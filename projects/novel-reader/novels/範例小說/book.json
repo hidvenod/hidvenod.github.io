@@ -1,6 +1,6 @@
 {
   "title": "範例小說",
-  "slug": "",
+  "slug": "fan-li-xiao-shuo",
   "author": "AI",
   "description": "這是一本由 AI 生成的範例小說。",
   "volumes": [
@@ -11,13 +11,13 @@
           "title": "第一章",
           "path": "novels/範例小說/第一卷/第一章.txt",
           "created_at": "2025-06-27T20:30:18.919458Z",
-          "updated_at": "2025-07-04T22:47:51.446375Z"
+          "updated_at": "2025-07-11T18:19:30.349118Z"
         },
         {
           "title": "第二章",
           "path": "novels/範例小說/第一卷/第二章.txt",
           "created_at": "2025-06-27T20:30:18.919458Z",
-          "updated_at": "2025-06-27T20:30:18.919458Z"
+          "updated_at": "2025-07-11T18:19:30.349118Z"
         }
       ]
     }
