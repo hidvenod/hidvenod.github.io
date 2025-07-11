@@ -29,6 +29,11 @@ jobs:
         with:
           python-version: "3.x"
 
+      - name: Install python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements/py.txt
+
       # 步驟 3: 執行腳本
       # 因為設定了 working-directory，這個指令會在 ./projects/novel-reader/ 下執行
       # 所以它可以正確地找到 scripts/generate_list.py

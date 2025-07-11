@@ -3,6 +3,7 @@ import json
 from datetime import datetime
 import unicodedata
 import re
+from pypinyin import pinyin, Style
 
 # --- 設定區 ---
 # 取得此腳本檔案所在的目錄
@@ -14,10 +15,12 @@ PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
 NOVOS_DIR = os.path.join(PROJECT_ROOT, 'novels')
 MASTER_LIST_FILE = os.path.join(PROJECT_ROOT, 'novels-list.json')
 BOOK_META_FILENAME = 'book.json'
-RECENT_CHAPTERS_COUNT = 10
+RECENT_CHAPTERS_COUNT = 5
 
 # ... 後面的程式碼不變 ...
 def generate_slug(text):
+    pinyin_list = pinyin(text, style=Style.NORMAL)
+    text = ' '.join(item[0] if isinstance(item, list) and item else item for item in pinyin_list)
     text = unicodedata.normalize('NFKD', text).encode('ascii', 'ignore').decode('ascii')
     text = re.sub(r'[^\w\s-]', '', text).strip().lower()
     return re.sub(r'[-\s]+', '-', text)
@@ -46,7 +49,14 @@ def update_metadata():
                 book_data = json.load(f)
         except (FileNotFoundError, json.JSONDecodeError):
             # 如果 book.json 不存在，初始化一個
-            book_data = {"title": book_title_str, "author": "", "description": "", "volumes": []}
+            book_data = {"slug": "", "title": book_title_str, "author": "", "description": "", "volumes": []}
+
+        # 檢查並產生 slug，確保 book.json 中有 slug
+        if 'slug' not in book_data or not book_data['slug']:
+            book_data['slug'] = generate_slug(book_data['title'])
+            # 因為我們修改了 book.json 的內容，所以標記為需要儲存
+            book_has_changed = True 
+            print(f"為書籍 [{book_title_str}] 產生了新的 slug: {book_data['slug']}")
 
         # 用一個 map 來快速查找章節和卷冊，避免重複遍歷
         volumes_map = {vol['title']: vol for vol in book_data['volumes']}
@@ -114,16 +124,18 @@ def update_metadata():
         if book_title_str not in master_books_map:
             # 新書
             new_book_entry = {
-                "slug": generate_slug(book_title_str),
+                "slug": book_data.get('slug', ''),
                 "title": book_title_str,
                 "author": book_data.get('author', ''),
                 "description": book_data.get('description', ''),
                 "last_updated": latest_update_time,
-                "meta_path": book_meta_path
+                "meta_path": os.path.relpath(book_meta_path, PROJECT_ROOT).replace(os.sep, '/') #【建議修改】路徑統一用相對路徑
             }
-            master_list['books'].append(new_book_entry)
+            # 【關鍵修復】將新書同時加入到 map 中
+            master_books_map[book_title_str] = new_book_entry
         else:
             # 更新現有書籍資訊
+            master_books_map[book_title_str]['slug'] = book_data.get('slug')
             master_books_map[book_title_str]['last_updated'] = latest_update_time
             master_books_map[book_title_str]['author'] = book_data.get('author', '')
             master_books_map[book_title_str]['description'] = book_data.get('description', '')

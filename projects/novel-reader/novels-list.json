@@ -1,6 +1,35 @@
 {
-  "books": [],
+  "books": [
+    {
+      "slug": "isekai1",
+      "title": "異世界小說一號",
+      "author": "gemini 2.5 pro",
+      "description": "以「異世界龍傲天后宮輕小說」為類型撰寫的小說",
+      "last_updated": "2025-07-11T23:37:36.877362Z",
+      "meta_path": "novels/異世界小說一號/book.json"
+    },
+    {
+      "slug": "",
+      "title": "範例小說",
+      "author": "AI",
+      "description": "這是一本由 AI 生成的範例小說。",
+      "last_updated": "2025-07-04T22:47:51.446375Z",
+      "meta_path": "novels/範例小說/book.json"
+    }
+  ],
   "recent_chapters": [
+    {
+      "book_title": "異世界小說一號",
+      "chapter_title": "第四章",
+      "path": "novels/異世界小說一號/第一卷/第四章.txt",
+      "created_at": "2025-07-11T23:37:36.877362Z"
+    },
+    {
+      "book_title": "異世界小說一號",
+      "chapter_title": "第三章",
+      "path": "novels/異世界小說一號/第一卷/第三章.txt",
+      "created_at": "2025-07-11T23:37:25.318977Z"
+    },
     {
       "book_title": "異世界小說一號",
       "chapter_title": "序",
@@ -18,18 +47,6 @@
       "chapter_title": "第二章",
       "path": "novels/異世界小說一號/第一卷/第二章.txt",
       "created_at": "2025-07-09T15:43:52.806174Z"
-    },
-    {
-      "book_title": "範例小說",
-      "chapter_title": "第一章",
-      "path": "novels/範例小說/第一卷/第一章.txt",
-      "created_at": "2025-06-27T20:30:18.919458Z"
-    },
-    {
-      "book_title": "範例小說",
-      "chapter_title": "第二章",
-      "path": "novels/範例小說/第一卷/第二章.txt",
-      "created_at": "2025-06-27T20:30:18.919458Z"
     }
   ]
 }
